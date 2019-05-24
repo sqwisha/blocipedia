@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <% include ./partials/head.ejs %>
     <title>Home</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
   </head>
   <body>
-    <h1>Welcome to Blocipedia</h1>
+
+    <% include ./partials/navbar.ejs %>
+
+    <main class="container">
+
+      <% include ./partials/messages.ejs %>
+
+      <header class="jumbotron my-4">
+        <h1 class="display-3">Welcome to Blocipedia</h1>
+        <a href="/users/sign_up" class="btn btn-primary btn-lg">Sign up</a>
+      </header>
+
+    </main>
+
+    <% include ./partials/baseScripts.ejs %>
+
   </body>
 </html>

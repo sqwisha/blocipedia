@@ -1,0 +1,66 @@
+::ffff:127.0.0.1 - - [24/May/2019:00:21:10 +0000] "GET / HTTP/1.1" 200 1563 "-" "-"
+::ffff:127.0.0.1 - - [24/May/2019:00:21:10 +0000] "GET /users/sign_up HTTP/1.1" 200 2431 "-" "-"
+::ffff:127.0.0.1 - - [24/May/2019:00:21:10 +0000] "POST /users/create HTTP/1.1" 302 23 "-" "-"
+::ffff:127.0.0.1 - - [24/May/2019:00:21:10 +0000] "POST /users/create HTTP/1.1" 302 23 "-" "-"
+::ffff:127.0.0.1 - - [24/May/2019:00:21:10 +0000] "POST /users/create HTTP/1.1" 302 23 "-" "-"
+::ffff:127.0.0.1 - - [24/May/2019:00:21:10 +0000] "POST /users/create HTTP/1.1" 302 36 "-" "-"
+[0mGET / [32m200 [0m12.499 ms - 1563[0m
+[0mGET /users/sign_up [32m200 [0m2.125 ms - 2431[0m
+[0mPOST /users/create [36m302 [0m212.911 ms - 23[0m
+[0mPOST /users/create [36m302 [0m165.563 ms - 23[0m
+[0mPOST /users/create [36m302 [0m169.443 ms - 23[0m
+[0mPOST /users/create [36m302 [0m0.840 ms - 36[0m
+[0mGET / [32m200 [0m12.916 ms - 1563[0m
+[0mGET /users/sign_up [32m200 [0m2.175 ms - 2431[0m
+[0mPOST /users/create [36m302 [0m206.484 ms - 23[0m
+[0mPOST /users/create [36m302 [0m1.058 ms - 36[0m
+[0mGET / [32m200 [0m14.404 ms - 1563[0m
+[0mGET /css/app.css [36m304 [0m1.841 ms - -[0m
+[0mGET /users/sign_up [32m200 [0m2.812 ms - 2431[0m
+[0mGET /css/app.css [36m304 [0m0.329 ms - -[0m
+[0mPOST /users/create [36m302 [0m247.513 ms - 46[0m
+[0mGET / [32m200 [0m4.742 ms - 1847[0m
+[0mGET /css/app.css [36m304 [0m0.324 ms - -[0m
+[0mGET / [32m200 [0m12.220 ms - 1563[0m
+[0mGET /users/sign_up [32m200 [0m2.203 ms - 2431[0m
+[0mPOST /users/create [36m302 [0m203.020 ms - 23[0m
+[0mPOST /users/create [36m302 [0m0.911 ms - 36[0m
+[0mGET / [32m200 [0m11.783 ms - 1563[0m
+[0mGET /users/sign_up [32m200 [0m2.244 ms - 2431[0m
+[0mPOST /users/create [36m302 [0m204.578 ms - 23[0m
+[0mPOST /users/create [36m302 [0m163.761 ms - 23[0m
+[0mPOST /users/create [36m302 [0m159.406 ms - 23[0m
+[0mPOST /users/create [36m302 [0m0.880 ms - 36[0m
+[0mGET / [32m200 [0m12.664 ms - 1563[0m
+[0mGET /users/sign_up [32m200 [0m2.224 ms - 2431[0m
+[0mPOST /users/create [36m302 [0m205.232 ms - 23[0m
+[0mPOST /users/create [36m302 [0m162.129 ms - 23[0m
+[0mPOST /users/create [36m302 [0m0.927 ms - 36[0m
+[0mGET / [32m200 [0m11.943 ms - 1563[0m
+[0mGET /users/sign_up [32m200 [0m2.194 ms - 2431[0m
+[0mPOST /users/create [36m302 [0m203.456 ms - 23[0m
+[0mPOST /users/create [36m302 [0m1.037 ms - 36[0m
+[0mGET / [32m200 [0m12.115 ms - 1563[0m
+[0mGET /users/sign_up [32m200 [0m3.913 ms - 2431[0m
+[0mPOST /users/create [36m302 [0m203.176 ms - 23[0m
+[0mPOST /users/create [36m302 [0m0.934 ms - 36[0m
+[0mGET / [32m200 [0m12.109 ms - 1563[0m
+[0mGET /users/sign_up [32m200 [0m2.168 ms - 2431[0m
+[0mPOST /users/create [36m302 [0m203.434 ms - 23[0m
+[0mPOST /users/create [36m302 [0m0.921 ms - 36[0m
+[0mGET / [32m200 [0m11.138 ms - 1563[0m
+[0mGET /users/sign_up [32m200 [0m2.617 ms - 2431[0m
+[0mPOST /users/create [36m302 [0m199.228 ms - 23[0m
+[0mPOST /users/create [36m302 [0m1.456 ms - 36[0m
+[0mGET / [32m200 [0m11.330 ms - 1563[0m
+[0mGET /users/sign_up [32m200 [0m3.696 ms - 2431[0m
+[0mPOST /users/create [36m302 [0m205.131 ms - 23[0m
+[0mPOST /users/create [36m302 [0m0.979 ms - 36[0m
+[0mGET / [32m200 [0m11.469 ms - 1563[0m
+[0mGET /users/sign_up [32m200 [0m2.188 ms - 2431[0m
+[0mPOST /users/create [36m302 [0m207.445 ms - 23[0m
+[0mPOST /users/create [36m302 [0m1.271 ms - 36[0m
+[0mGET / [32m200 [0m12.744 ms - 1563[0m
+[0mGET /users/sign_up [32m200 [0m2.527 ms - 2431[0m
+[0mPOST /users/create [36m302 [0m206.517 ms - 23[0m
+[0mPOST /users/create [36m302 [0m0.930 ms - 36[0m
