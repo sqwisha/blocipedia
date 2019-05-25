@@ -11,7 +11,7 @@ module.exports = {
       usernameField: 'email'
     }, (email, password, done) => {
       User.findOne({
-        where: { email }
+        where: { email: email }
       })
       .then((user) => {
         if (!user || !authHelper.comparePass(password, user.password)) {
