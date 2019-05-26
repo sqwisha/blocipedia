@@ -11,14 +11,15 @@ module.exports = {
       usernameField: 'email'
     }, (email, password, done) => {
       User.findOne({
-        where: { email: email }
+        where: { email }
       })
       .then((user) => {
-        if (!user || !authHelper.comparePass(password, user.password)) {
-          return done(null, false, { message: 'Invalid email or password' });
-        }
-
+        const passwordMatch = authHelper.comparePass(password, user.password);
+        user.passwordMatch = passwordMatch;
         return done(null, user);
+      })
+      .catch((err) => {
+        return done(err);
       });
     }));
 
