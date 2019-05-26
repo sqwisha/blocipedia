@@ -105,36 +105,49 @@ describe('routes : user', () => {
 
   });
 
-  // describe('GET /users/sign_in', () => {
+  describe('GET /users/sign_in', () => {
 
-  //   beforeEach((done) => {
-  //     User.create({
-  //       name: 'A Name',
-  //       email: 'an@email.com',
-  //       password: 'password'
-  //     })
-  //     .then((user) => {
-  //       done();
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       done();
-  //     });
-  //   });
+    beforeEach((done) => {
+      User.create({
+        name: 'A Name',
+        email: 'an@email.com',
+        password: 'password'
+      })
+      .then((user) => {
+        done();
+      })
+      .catch((err) => {
+        console.log(err);
+        done();
+      });
+    });
 
-  //   it('should not allow sign in with incorrect password', (done) => {
-  //     request.post({
-  //       url: `${base}/users/sign_in`,
-  //       form: {
-  //         email: 'an@email.com',
-  //         password: 'pazzwerd'
-  //       }
-  //     }, (err, res, body) => {
-  //       console.log('BODY: ', body, 'Err: ', err, 'RES: ', res);
-  //       done();
-  //     });
-  //   });
+    it('should not allow sign in with incorrect password', (done) => {
+      request.post({
+        url: `${base}/users/sign_in`,
+        form: {
+          email: 'an@email.com',
+          password: 'pazzwerd'
+        }
+      }, (err, res, body) => {
+        expect(body).toContain('Redirecting to /users/sign_in');
+        done();
+      });
+    });
 
-  // });
+    it('should not allow sign in with incorrect email', (done) => {
+      request.post({
+        url: `${base}/users/sign_in`,
+        form: {
+          email: 'an8888@email.com',
+          password: 'password'
+        }
+      }, (err, res, body) => {
+        expect(body).toContain('Redirecting to /users/sign_in');
+        done();
+      });
+    });
+
+  });
 
 });
