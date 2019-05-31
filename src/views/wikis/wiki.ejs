@@ -19,17 +19,16 @@
 
       <% if (wikis) { %>
         <% wikis.forEach((wiki) => { %>
-          <% if (!wiki.private || (currentUser && (wiki.userId === currentUser.id || currentUser.isAdmin))) { %>
+          <% if (!wiki.private || (currentUser && (currentUser.id == wiki.userId || currentUser.isAdmin()))) { %>
             <div class="card" style="width: 18rem;">
               <div class="card-body">
-                <h5 class="card-title"><%= wiki.title %></h5>
+                <a href="/wikis/<%= wiki.id %>"><h5 class="card-title"><%= wiki.title %></h5></a>
                 <p class="card-text"><%= wiki.body %></p>
-                <% if (currentUser && ( currentUser.id === wiki.userId || currentUser.isAdmin)) { %>
+                <% if (currentUser && ( currentUser.id == wiki.userId || currentUser.isAdmin())) { %>
                   <a class="btn btn-info" href="/wikis/<%= wiki.id %>/edit"role="button">Edit</a>
                   <form action="/wikis/<%= wiki.id %>/delete" method="post" style="display: inline-block">
                     <button type="submit" class="btn btn-danger">Delete</button>
                   </form>
-
                 <% } %>
               </div>
             </div>
