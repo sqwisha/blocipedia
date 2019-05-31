@@ -16,8 +16,7 @@ describe('routes : wikis', () => {
       User.create({
         name: 'Matrim Cauthon',
         email: 'bloodandashes@thewheel.com',
-        password: 'theDarkOnesOwnLuck',
-        role: 'member'
+        password: 'theDarkOnesOwnLuck'
       })
       .then((user) => {
         this.user = user;
