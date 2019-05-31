@@ -5,7 +5,7 @@ module.exports = class ApplicationPolicy {
   }
 
   _isAdmin() {
-    return this.user.role === 'admin';
+    return this.user.role === 2;
   }
 
   _isOwner() {
