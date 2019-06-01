@@ -17,24 +17,40 @@
         <a class="btn btn-primary" href="/wikis/new" role="button">Create New Wiki</a>
       <% } %>
 
-      <% if (wikis) { %>
-        <% wikis.forEach((wiki) => { %>
-          <% if (!wiki.private || (currentUser && (currentUser.id == wiki.userId || currentUser.isAdmin()))) { %>
-            <div class="card" style="width: 18rem;">
-              <div class="card-body">
-                <a href="/wikis/<%= wiki.id %>"><h5 class="card-title"><%= wiki.title %></h5></a>
-                <p class="card-text"><%= wiki.body %></p>
-                <% if (currentUser && ( currentUser.id == wiki.userId || currentUser.isAdmin())) { %>
-                  <a class="btn btn-info" href="/wikis/<%= wiki.id %>/edit"role="button">Edit</a>
-                  <form action="/wikis/<%= wiki.id %>/delete" method="post" style="display: inline-block">
+
+      <div class="row">
+        <% if (wikis) { %>
+          <% wikis.forEach((wiki) => { %>
+            <% if (!wiki.private || (currentUser && (currentUser.id == wiki.userId || currentUser.isAdmin()))) { %>
+
+            <div class="col-md">
+
+              <div class="card">
+                <div class="card-body">
+
+                  <a href="/wikis/<%= wiki.id %>"><h5 class="card-title"><%= wiki.title %></h5></a>
+
+                  <p class="card-text"><%= wiki.body %></p>
+
+                  <% if (currentUser && ( currentUser.id == wiki.userId || currentUser.isAdmin())) { %>
+
+                    <a class="btn btn-info" href="/wikis/<%= wiki.id %>/edit"role="button">Edit</a>
+
+                    <form action="/wikis/<%= wiki.id %>/delete" method="post" style="display: inline-block">
                     <button type="submit" class="btn btn-danger">Delete</button>
-                  </form>
-                <% } %>
+                    </form>
+
+                  <% } %>
+
+                </div>
               </div>
+
             </div>
-          <% } %>
-        <% }) %>
-      <% } %>
+            <% } %>
+          <% }) %>
+        <% } %>
+      </div>
+
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
