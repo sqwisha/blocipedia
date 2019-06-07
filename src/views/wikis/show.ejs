@@ -14,7 +14,7 @@
         <div class="col-md-9">
           <h1><%= wiki.title %></h1>
           <p><%= wiki.body %></p>
-          <% if (currentUser && (currentUser.id === wiki.userId || currentUser.isAdmin)) { %>
+          <% if (currentUser && ( currentUser.id == wiki.userId || currentUser.isAdmin())) { %>
             <a class="btn btn-info" href="/wikis/<%= wiki.id %>/edit"role="button">Edit</a>
             <form action="/wikis/<%= wiki.id %>/delete" method="post" style="display: inline-block">
               <button type="submit" class="btn btn-danger">Delete</button>

@@ -22,16 +22,18 @@
           <label for="body">Wiki body</label>
           <textarea name="body" class="form-control" rows="4" placeholder="Enter wiki body"><%= wiki.body %></textarea>
         </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="true" name="private"
-          <% if (wiki.private) { %>
-            checked
-          <% } %>
-          >
-          <label class="form-check-label" for="private">
-            Private
-          </label>
-        </div>
+        <% if (currentUser.isPremium() || currentUser.isAdmin()) { %>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="true" name="private"
+            <% if (wiki.private) { %>
+              checked
+            <% } %>
+            >
+            <label class="form-check-label" for="private">
+              Private
+            </label>
+          </div>
+        <% } %>
         <button type="submit" class="btn btn-primary">Update</button>
       </form>
       <form action="/wikis/<%= wiki.id %>/delete" method="post" style="display: inline-block">

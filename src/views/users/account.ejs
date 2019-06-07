@@ -1,0 +1,75 @@
+<!-- TODO make page that displays downgrade option, list of private wikis/links, user info? -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+      <% include ../static/partials/messages.ejs %>
+
+      <h1>Account</h1>
+
+      <h4 ><%= currentUser.name %></h4>
+      <h6>
+        <% if (currentUser.role > 0) { %>
+          <%= currentUser.role === 2 ? 'Admin' : 'Premium Member' %>
+        <% } else { %>
+          Standard Member
+        <% } %>
+      </h6>
+      <hr>
+      <h3>My Wikis</h3>
+
+      <% if (wikis) { %>
+        <ul class="list-group list-group-flush">
+        <% wikis.forEach((wiki) => { %>
+          <li class="list-group-item"><a href="/wikis/<%= wiki.id %>"><%= wiki.title %></a>
+            <% if (wiki.private) { %>
+              <i class="fas fa-lock"></i>
+            <% } %>
+          </li>
+        <% }) %>
+        </ul>
+      <% } %>
+      <% if (currentUser.isPremium()) { %>
+        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#downgradeModal">
+          Downgrade Membership
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="downgradeModal" tabindex="-1" role="dialog" aria-labelledby="downgradeConfirmation" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="downgradeConfirmation">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Downgrading to a Standard Membership will automatically make all your private wikis public.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep Premium</button>
+                <form action="/membership/downgrade" method="post">
+                  <button type="submit" class="btn btn-primary">Yes, downgrade to Standard</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% } else { %>
+        <a class="btn btn-success" href="/membership/upgrade">Upgrade</a>
+      <% } %>
+
+    </main>
+
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>

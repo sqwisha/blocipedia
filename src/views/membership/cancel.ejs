@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+      <% include ../static/partials/messages.ejs %>
+      <header class="jumbotron my-4">
+        <h1 class="display-4">Upgrade Canceled</h1>
+        <p class="lead">Need to try again?</p>
+        <button
+          id="checkout-button-sku_FAynjjBDLhgbTf"
+          role="link"
+        >
+          Upgrade for just $15
+        </button>
+      </header>
+
+    <div id="error-message"></div>
+  </main>
+
+  <script src="/stripe/stripe.js"></script>
+  <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>

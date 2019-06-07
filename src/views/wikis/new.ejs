@@ -23,12 +23,14 @@
           <label for="body">Wiki body</label>
           <textarea name="body" class="form-control" rows="4" placeholder="Enter wiki body"></textarea>
         </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="true" name="private">
-          <label class="form-check-label" for="private">
-            Private
-          </label>
-        </div>
+        <% if (currentUser.isPremium() || currentUser.isAdmin()) { %>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="true" name="private">
+            <label class="form-check-label" for="private">
+              Private
+            </label>
+          </div>
+        <% } %>
         <button type="submit" class="btn btn-primary">Publish</button>
       </form>
     <% } %>

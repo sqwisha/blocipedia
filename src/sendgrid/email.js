@@ -5,10 +5,24 @@ module.exports = {
   welcome(user) {
     const msg = {
       to: user.email,
-      from: 'test@example.com',
+      from: 'blocipedia@email.email',
       subject: 'Welcome to Blocipedia',
-      text: 'Thank you for signing up',
-      html: '<strong>Enjoy!</strong>'
+      content: [{
+        type: 'text/plain',
+        value: 'Thank you for signing up! Enjoy!'
+      }]
+    };
+    sgMail.send(msg);
+  },
+  upgrade(user) {
+    const msg = {
+      to: user.email,
+      from: 'blocipedia@email.email',
+      subject: 'Blocipedia Membership Upgraded',
+      content: [{
+        type: 'text/plain',
+        value: 'Woohoo! You\'re a Premium Member now! Enjoy new features like private wikis, favorites, and more!'
+      }]
     };
     sgMail.send(msg);
   }

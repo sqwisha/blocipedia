@@ -14,9 +14,18 @@
         <a class="nav-link" href="/wikis">Wikis</a>
       </li>
       <% if (currentUser) { %>
-      <li class="nav-item">
-        <a class="nav-link" href="/users/sign_out">Sign Out</a>
-      </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <%= (currentUser.name).split(' ')[0] %>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <% if (!currentUser.isPremium()) { %>
+              <a class="dropdown-item" href="/membership/upgrade">Go Premium</a>
+            <% } %>
+            <a class="dropdown-item" href="/users/account">Account</a>
+            <a class="dropdown-item" href="/users/sign_out">Sign Out</a>
+          </div>
+        </li>
       <% } else { %>
       <li class="nav-item">
         <a class="nav-link" href="/users/sign_up">Sign Up</a>

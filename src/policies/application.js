@@ -8,6 +8,10 @@ module.exports = class ApplicationPolicy {
     return this.user.role === 2;
   }
 
+  _isPremium() {
+    return this.user.role === 1;
+  }
+
   _isOwner() {
     return this.wiki && (this.user.id == this.wiki.userId);
   }

@@ -41,14 +41,6 @@ describe('routes : wikis', () => {
 
   });
 
-  // '/wikis'
-  // '/wikis/new'
-  // '/wikis/create'
-  // '/wikis/:id'
-  // '/wikis/:id/edit'
-  // '/wikis/:id/update'
-  // '/wikis/:id/delete'
-
   describe('GET /wikis', () => {
     it('should display all wikis', (done) => {
       request.get(base, (err, res, body) => {

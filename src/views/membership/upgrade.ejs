@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+      <% include ../static/partials/messages.ejs %>
+      <header class="jumbotron my-4">
+          <h1 class="display-3">Premium Membership</h1>
+          <p class="lead">Click below to upgrade and get these great features:
+            <ul>
+              <li>Private wikis</li>
+              <li>Another benefit</li>
+              <li>One last really cool benefit</li>
+            </ul>
+          </p>
+          <button
+            id="checkout-button-sku_FAynjjBDLhgbTf"
+            role="link"
+          >
+            Upgrade for just $15
+          </button>
+        </header>
+
+      <div id="error-message"></div>
+    </main>
+
+    <script src="/stripe/stripe.js"></script>
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>

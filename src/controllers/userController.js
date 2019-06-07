@@ -47,5 +47,15 @@ module.exports = {
     req.logout();
     req.flash('notice', `You've successfully signed out!`);
     res.redirect('/');
+  },
+  show(req, res, next) {
+    userQueries.getUserWikis(req.user, (err, wikis) => {
+      if (err || !wikis) {
+        req.flash('notice', 'Something went wrong.');
+        res.redirect('/');
+      } else {
+        res.render('users/account', {wikis});
+      }
+    });
   }
 };
