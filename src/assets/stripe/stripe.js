@@ -5,8 +5,8 @@ const checkoutButton = document.getElementById('checkout-button-sku_FAynjjBDLhgb
 checkoutButton.addEventListener('click', function () {
   stripe.redirectToCheckout({
     items: [{sku: 'sku_FAynjjBDLhgbTf', quantity: 1}],
-    successUrl: process.env.stripe_successUrl || window.location.protocol + '//sqwisha-blocipedia.herokuapp.com/membership/upgrade/success',
-    cancelUrl: process.env.stripe_cancelUrl || window.location.protocol + '//sqwisha-blocipedia.herokuapp.com/membership/cancel'
+    successUrl: window.location.protocol + '//sqwisha-blocipedia.herokuapp.com/membership/upgrade/success' || process.env.stripe_successUrl ,
+    cancelUrl: window.location.protocol + '//sqwisha-blocipedia.herokuapp.com/membership/upgrade/cancel' || process.env.stripe_cancelUrl
   })
   .then(function (result) {
     if (result.error) {
