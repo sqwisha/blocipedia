@@ -80,6 +80,7 @@ module.exports = {
       });
     })
     .catch((err) => {
+      console.log(err);
       req.flash('error', 'You are not authorized to do that.');
       res.render('index');
     });
