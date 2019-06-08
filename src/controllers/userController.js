@@ -72,7 +72,7 @@ module.exports = {
       userQueries.upgradeUser(req.user, (err, user) => {
         if (err || !user) {
           req.flash('error', err);
-          res.redirect('index');
+          res.redirect('/index');
         } else {
           email.upgrade(user);
           res.render('membership/success');
