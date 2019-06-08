@@ -2,7 +2,7 @@ const userQueries = require('../db/queries.user');
 const passport = require('passport');
 const email = require('../sendgrid/email');
 const flash = require('express-flash');
-const stripe = require('stripe')(process.env.STRIPE_API_KEY);
+const stripe = require('stripe')('pk_test_yKxWzowzQDtQUVvTldTwHva200dtooZ4CL');
 
 module.exports = {
   signUp(req, res, next) {
