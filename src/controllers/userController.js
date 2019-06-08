@@ -81,7 +81,7 @@ module.exports = {
     })
     .catch((err) => {
       req.flash('error', 'You are not authorized to do that.');
-      res.redirect('index');
+      res.render('index');
     });
   }
 };
