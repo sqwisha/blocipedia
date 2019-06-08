@@ -11,5 +11,6 @@ router.get('/users/sign_in', userController.signInForm);
 router.post('/users/sign_in', validation.validateUsers, userController.signIn);
 router.get('/users/sign_out', userController.signOut);
 router.get('/users/account', auth.ensureAuthenticated, userController.show);
+router.post('/users/:id/upgrade', userController.upgrade);
 
 module.exports = router;

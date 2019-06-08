@@ -19,18 +19,24 @@
               <li>One last really cool benefit</li>
             </ul>
           </p>
-          <button
-            id="checkout-button-sku_FAynjjBDLhgbTf"
-            role="link"
-          >
-            Upgrade for just $15
-          </button>
+          <form method="POST" action="/users/<%= currentUser.id %>/upgrade">
+            <script
+              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="pk_test_yKxWzowzQDtQUVvTldTwHva200dtooZ4CL"
+              data-amount="1500"
+              data-name="Premium Membership"
+              data-description="Upgrade to Premium"
+              data-image="https://upload.wikimedia.org/wikipedia/commons/7/76/GreenButton_UpArrow.svg"
+              data-locale="auto"
+              data-zip-code="true"
+              data-email="<%= currentUser.email %>"
+              data-allow-remember-me="false">
+            </script>
+          </form>
         </header>
 
-      <div id="error-message"></div>
     </main>
 
-    <script src="/stripe/stripe.js"></script>
     <% include ../static/partials/baseScripts.ejs %>
 
   </body>

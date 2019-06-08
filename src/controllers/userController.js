@@ -2,6 +2,7 @@ const userQueries = require('../db/queries.user');
 const passport = require('passport');
 const email = require('../sendgrid/email');
 const flash = require('express-flash');
+const stripe = require('stripe')(process.env.STRIPE_API_KEY);
 
 module.exports = {
   signUp(req, res, next) {
@@ -56,6 +57,31 @@ module.exports = {
       } else {
         res.render('users/account', {wikis});
       }
+    });
+  },
+  upgrade(req, res, next) {
+    const stripeToken = req.body.stripeToken;
+
+    stripe.charges.create({
+      amount: 1500,
+      currency: "usd",
+      description: "Upgrade tp premium User",
+      source: stripeToken
+    })
+    .then(() => {
+      userQueries.upgradeUser(req.user, (err, user) => {
+        if (err || !user) {
+          req.flash('error', err);
+          res.redirect('index');
+        } else {
+          email.upgrade(user);
+          res.render('membership/success');
+        }
+      });
+    })
+    .catch((err) => {
+      req.flash('error', 'You are not authorized to do that.');
+      res.redirect('index');
     });
   }
 };
