@@ -2,30 +2,44 @@ body {
   padding-top: 60px;
 }
 
-.card {
-  width: 20rem;
-  margin: 1rem 0 1rem;
+i {
+  font-size: 1.2em;
+  cursor: pointer;
 }
 
-p.card-text {
+button:focus {
+  outline: none;
+}
+
+.wiki-btn {
+  border: none;
+  background-color: transparent;
+}
+
+.wiki-body {
+  line-height: 1.2em;
+  max-height: 2.4em;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  line-height: 1.2rem;
-  max-height: 4.8rem;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
 }
 
-#checkout-button-sku_FAynjjBDLhgbTf {
-  background-color: #6772E5;
-  color: #FFF;
-  padding: 8px 12px;
-  border: 0;
-  border-radius: 4px;
-  font-size: 1em;
+.mod-buttons {
+  display: inline-flex;
 }
 
-i {
-  margin: 0 .5em;
+.button-edit {
+  color: #444444;
+}
+
+.button-delete {
+  color:#dc3545;
+}
+
+.list-group-item {
+  max-width: 800px;
+}
+
+.list-group-item > a {
+  text-decoration: none;
+  color: #000;
 }

@@ -18,38 +18,33 @@
       <% } %>
 
 
-      <div class="row">
+      <ul class="list-group list-group-horizontal-md">
         <% if (wikis) { %>
           <% wikis.forEach((wiki) => { %>
             <% if (!wiki.private || (currentUser && (currentUser.id == wiki.userId || currentUser.isAdmin()))) { %>
-
-            <div class="col-md">
-
-              <div class="card">
-                <div class="card-body">
-
-                  <a href="/wikis/<%= wiki.id %>"><h5 class="card-title"><%= wiki.title %></h5></a>
-
-                  <p class="card-text"><%= wiki.body %></p>
-
-                  <% if (currentUser && ( currentUser.id == wiki.userId || currentUser.isAdmin())) { %>
-
-                    <a class="btn btn-info" href="/wikis/<%= wiki.id %>/edit"role="button">Edit</a>
-
-                    <form action="/wikis/<%= wiki.id %>/delete" method="post" style="display: inline-block">
-                    <button type="submit" class="btn btn-danger">Delete</button>
+              <li class="list-group-item list-group-item-action">
+                <a href="/wikis/<%= wiki.id %>">
+                  <h4><%= wiki.title %></h4>
+                  <p class="wiki-body"><%= wiki.body %></p>
+                </a>
+                <% if (currentUser && ( currentUser.id == wiki.userId || currentUser.isAdmin())) { %>
+                    <form action="/wikis/<%= wiki.id %>/delete" method="post" class="mod-buttons">
+                      <button type="submit" class="wiki-btn button-delete">
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
                     </form>
 
-                  <% } %>
-
-                </div>
-              </div>
-
-            </div>
+                    <form action="/wikis/<%= wiki.id %>/edit" method="get" class="mod-buttons">
+                      <button type="submit" class="wiki-btn button-edit">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                    </form>
+                <% } %>
+              </li>
             <% } %>
           <% }) %>
         <% } %>
-      </div>
+      </ul>
 
     </main>
 

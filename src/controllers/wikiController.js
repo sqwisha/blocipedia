@@ -1,6 +1,11 @@
 const Wiki = require('../db/models').Wiki;
 const wikiQueries = require('../db/queries.wiki');
 const Authorizer = require('../policies/application');
+const markdown = require('markdown-it')({
+  html: true,
+  linkify: true
+});
+const removeMd = require('remove-markdown', {useImgAltText: false});
 
 module.exports = {
   index(req, res, next) {
@@ -9,6 +14,9 @@ module.exports = {
         req.flash('notice', 'There was a problem');
         res.redirect('/');
       } else {
+        wikis.forEach((wiki) => {
+          wiki.body = removeMd(wiki.body);
+        });
         res.render('wikis/wiki', {wikis});
       }
     });
@@ -49,6 +57,7 @@ module.exports = {
         const authorized = new Authorizer(req.user, wiki).show();
 
         if (authorized) {
+          wiki.body = markdown.render(wiki.body);
           res.render(`wikis/show`, {wiki});
         } else {
           req.flash('notice', 'You are not authorized to do that.');
