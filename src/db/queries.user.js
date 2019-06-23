@@ -1,6 +1,9 @@
 const User = require('./models').User;
 const Wiki = require('./models').Wiki;
+const Collaborator = require('./models').Collaborator;
 const bcrypt = require('bcryptjs');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 module.exports = {
   createUser(newUser, callback) {
@@ -73,10 +76,36 @@ module.exports = {
   },
   getUserWikis(user, callback) {
     return Wiki.findAll({
-      where: {userId: user.id}
+      where: {
+        [Op.or] : [
+          {userId: user.id},
+          {'$collaborators.userId$': user.id}
+        ]
+      },
+      include: [{
+        model: Collaborator,
+        as: 'collaborators'
+      }],
+      order: [['updatedAt', 'DESC']]
     })
     .then((wikis) => {
       callback(null, wikis);
+    })
+    .catch((err) => {
+      callback(err);
+    });
+  },
+  getAllUsers(userId, callback) {
+    User.findAll({
+      where: {
+        id: {
+          [Op.notIn] : [userId]
+        }
+      },
+      order: [['name', 'ASC']]
+    })
+    .then((users) => {
+      callback(null, users);
     })
     .catch((err) => {
       callback(err);

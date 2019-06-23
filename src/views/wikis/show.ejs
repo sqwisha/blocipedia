@@ -9,21 +9,38 @@
 
     <main class="container">
 
-    <% include ../static/partials/messages.ejs %>
-      <div class="row">
-        <div class="col-md-9">
+      <% include ../static/partials/messages.ejs %>
+
+      <div class="outer-show-container">
+        <div class="show-container">
           <h1><%= wiki.title %></h1>
           <p><%- wiki.body %></p>
-          <% if (currentUser && ( currentUser.id == wiki.userId || currentUser.isAdmin())) { %>
-            <form action="/wikis/<%= wiki.id %>/delete" method="post" style="display: inline-block">
-              <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-            <a class="btn btn-info" href="/wikis/<%= wiki.id %>/edit"role="button">Edit</a>
 
-          <% } %>
+            <% if (currentUser && (currentUser.isAdmin() || wiki.userIsOwner)) { %>
+              <form action="/wikis/<%= wiki.id %>/delete" method="post" style="display: inline-block">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            <% } %>
+            <% if (currentUser && ( currentUser.isAdmin() || wiki.userIsOwner || wiki.userIsCollaborator )) { %>
+              <a class="btn btn-info" href="/wikis/<%= wiki.id %>/edit"role="button">Edit</a>
+            <% } %>
         </div>
-      </div>
 
+        <aside class="collaborator-container">
+          <% if (wiki.collaborators.length > 0) { %>
+            <h5>Collaborators</h5>
+
+            <ul class="collaborator-ul">
+              <% wiki.collaborators.forEach((collaborator) => { %>
+                <li class="collaborator-li">
+                  <%= collaborator.User.name %>
+                </li>
+              <% }) %>
+            </ul>
+          <% } %>
+        </aside>
+
+      </div>
 
     </main>
 

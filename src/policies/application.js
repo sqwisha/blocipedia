@@ -2,6 +2,13 @@ module.exports = class ApplicationPolicy {
   constructor(user, wiki) {
     this.user = user;
     this.wiki = wiki;
+    if (wiki && wiki.collaborators) {
+      this.collaborators = wiki.collaborators.map((collaborator) => {
+        return collaborator.userId;
+      });
+    } else {
+      this.collaborators = [];
+    }
   }
 
   _isAdmin() {
@@ -13,11 +20,17 @@ module.exports = class ApplicationPolicy {
   }
 
   _isOwner() {
-    return this.wiki && (this.user.id == this.wiki.userId);
+    return this.wiki && this.user && (this.user.id == this.wiki.userId);
+  }
+
+  _isCollaborator() {
+    return this.new() && this.collaborators.indexOf(this.user.id) > -1;
   }
 
   show() {
-    return !this.wiki.private || (this._isOwner() || this._isAdmin());
+    return !this.wiki.private ||
+    (this.new() &&
+    (this._isOwner() || this._isCollaborator() || this._isAdmin()));
   }
 
   new() {
@@ -29,8 +42,9 @@ module.exports = class ApplicationPolicy {
   }
 
   edit() {
-    return this.new &&
-      (this.wiki && (this._isOwner() || this._isAdmin()));
+    return this.new() &&
+      (this.wiki &&
+      (this._isOwner() || this._isCollaborator() || this._isAdmin()));
   }
 
   update() {

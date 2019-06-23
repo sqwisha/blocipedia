@@ -4,10 +4,10 @@
       <span aria-hidden="true">&times;</span>
     </button>
     <% if (messages.error) { %>
-    Validation errors:
+    Error:
     <ul>
       <% messages.error.forEach((err) => { %>
-        <li><%= `${err.param} ${err.msg}` %></li>
+        <li><%= typeof err === 'object' ? `${err.param} ${err.msg}`: `${err}` %></li>
       <% }) %>
     </ul>
     <% } else { %>

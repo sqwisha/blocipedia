@@ -1,5 +1,4 @@
 const userQueries = require('../db/queries.user');
-const email = require('../sendgrid/email');
 
 module.exports = {
   upgrade(req, res, next) {

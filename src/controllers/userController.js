@@ -1,7 +1,6 @@
 const userQueries = require('../db/queries.user');
 const passport = require('passport');
 const email = require('../sendgrid/email');
-const flash = require('express-flash');
 const stripe = require('stripe')(process.env.STRIPE_API_KEY);
 
 module.exports = {
@@ -36,7 +35,7 @@ module.exports = {
     passport.authenticate('local')(req, res, function () {
       if (req.user === undefined || !req.user.passwordMatch) {
         req.logout();
-        req.flash('notice', 'Sign in failed. Please try again.')
+        req.flash('notice', 'Sign in failed. Please try again.');
         res.redirect('/users/sign_in');
       } else {
         req.flash('notice', `You've successfully signed in!`);
@@ -51,7 +50,7 @@ module.exports = {
   },
   show(req, res, next) {
     userQueries.getUserWikis(req.user, (err, wikis) => {
-      if (err || !wikis) {
+      if (err) {
         req.flash('notice', 'Something went wrong.');
         res.redirect('/');
       } else {
@@ -80,8 +79,7 @@ module.exports = {
       });
     })
     .catch((err) => {
-      console.log(err);
-      req.flash('error', 'You are not authorized to do that.');
+      req.flash('notice', 'You are not authorized to do that.');
       res.render('index');
     });
   }

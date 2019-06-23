@@ -41,69 +41,9 @@ describe('routes : membership', () => {
     });
   });
 
-  // GET /membership/upgrade
-  // GET /membership/upgrade/success
-  // GET /membership/upgrade/cancel
-  // POST /membership/downgrade
-
-  describe('GET membership/upgrade', () => {
-    beforeEach((done) => {
-      request.get({
-        url: 'http://localhost:3000/auth/fake',
-        form: {
-          email: this.user.email,
-          role: this.user.role,
-          userId: this.user.id
-        }
-      },
-        (err, res, body) => {
-          done();
-        }
-      );
-    });
-
-    it('should display a page with Premium membership info', (done) => {
-      request.get(`${base}/upgrade`, (err, res, body) => {
-        expect(err).toBeNull();
-        expect(body).toContain('Upgrade for just $15');
-        done();
-      });
-    });
-  });
-
-  describe('GET membership/upgrade/success', () => {
-    beforeEach((done) => {
-      request.get({
-        url: 'http://localhost:3000/auth/fake',
-        form: {
-          email: this.user.email,
-          role: this.user.role,
-          userId: this.user.id
-        }
-      },
-        (err, res, body) => {
-          done();
-        }
-      );
-    });
-
-    it('should upgrade member to premium', (done) => {
-      expect(this.user.role).toBe(0);
-
-      request.get(`${base}/upgrade/success`, (err, res, body) => {
-        expect(body).toContain('Congratulations');
-
-        User.findOne({where : {id: this.user.id}})
-        .then((user) => {
-          expect(user.role).toBe(1);
-          done();
-        });
-      });
-    });
-  });
-
   describe('GET membership/upgrade/cancel', () => {
     beforeEach((done) => {
+
       request.get({
         url: 'http://localhost:3000/auth/fake',
         form: {
@@ -159,4 +99,4 @@ describe('routes : membership', () => {
   });
 
 
-})
+});

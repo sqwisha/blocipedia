@@ -16,7 +16,6 @@ module.exports = {
       } else if (id = 0) {
         delete req.user;
       }
-
       if (next) { next() }
     }
 

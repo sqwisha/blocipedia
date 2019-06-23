@@ -18,22 +18,22 @@
       <% } %>
 
 
-      <ul class="list-group list-group-horizontal-md">
+      <ul class="list-group list-group-horizontal-md wiki-list">
         <% if (wikis) { %>
           <% wikis.forEach((wiki) => { %>
-            <% if (!wiki.private || (currentUser && (currentUser.id == wiki.userId || currentUser.isAdmin()))) { %>
               <li class="list-group-item list-group-item-action">
                 <a href="/wikis/<%= wiki.id %>">
                   <h4><%= wiki.title %></h4>
                   <p class="wiki-body"><%= wiki.body %></p>
                 </a>
-                <% if (currentUser && ( currentUser.id == wiki.userId || currentUser.isAdmin())) { %>
+                  <% if (currentUser && (currentUser.isAdmin() || wiki.userIsOwner)) { %>
                     <form action="/wikis/<%= wiki.id %>/delete" method="post" class="mod-buttons">
                       <button type="submit" class="wiki-btn button-delete">
                         <i class="fas fa-trash-alt"></i>
                       </button>
                     </form>
-
+                  <% } %>
+                  <% if (currentUser && ( currentUser.isAdmin() || wiki.userIsOwner || wiki.userIsCollaborator )) { %>
                     <form action="/wikis/<%= wiki.id %>/edit" method="get" class="mod-buttons">
                       <button type="submit" class="wiki-btn button-edit">
                         <i class="fas fa-edit"></i>
@@ -41,7 +41,6 @@
                     </form>
                 <% } %>
               </li>
-            <% } %>
           <% }) %>
         <% } %>
       </ul>

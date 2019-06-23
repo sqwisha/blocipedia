@@ -10,5 +10,7 @@ router.get('/wikis/:id', wikiController.show);
 router.get('/wikis/:id/edit', wikiController.edit);
 router.post('/wikis/:id/update', wikiController.update);
 router.post('/wikis/:id/delete', wikiController.delete);
+router.post('/wikis/:id/addCollaborator', wikiController.addCollaborator);
+router.post('/wikis/:id/:collaboratorId/removeCollaborator', wikiController.removeCollaborator);
 
 module.exports = router;

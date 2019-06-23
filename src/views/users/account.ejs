@@ -1,4 +1,3 @@
-<!-- TODO make page that displays downgrade option, list of private wikis/links, user info? -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -26,18 +25,21 @@
       <h3>My Wikis</h3>
 
       <% if (wikis) { %>
-        <ul class="list-group list-group-flush">
+        <ul class="list-group list-group-flush account-wikis">
         <% wikis.forEach((wiki) => { %>
-          <li class="list-group-item"><a href="/wikis/<%= wiki.id %>"><%= wiki.title %></a>
-            <% if (wiki.private) { %>
-              <i class="fas fa-lock"></i>
-            <% } %>
+          <li class="list-group-item">
+            <a href="/wikis/<%= wiki.id %>"><%= wiki.title %>
+              <% if (wiki.private) { %>
+                <i class="fas fa-sm fa-lock"></i>
+              <% } %>
+            </a>
           </li>
         <% }) %>
         </ul>
       <% } %>
+
       <% if (currentUser.isPremium()) { %>
-        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#downgradeModal">
+        <button type="button" class="btn btn-outline-secondary" id="downgrade-button" data-toggle="modal" data-target="#downgradeModal">
           Downgrade Membership
         </button>
 

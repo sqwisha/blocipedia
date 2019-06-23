@@ -9,21 +9,44 @@
 
     <main class="container">
 
-    <% include ../static/partials/messages.ejs %>
+      <% include ../static/partials/messages.ejs %>
 
-    <h1>New Wiki</h1>
+      <div class="outer-show-container">
+        <div class="show-container">
 
-    <% if (currentUser) { %>
-      <form action="/wikis/create" method="POST">
-        <div class="form-group">
-          <label for="title">Title</label>
-          <input type="text" name="title" class="form-control" placeholder="Enter title">
+          <h1>New Wiki</h1>
+
+          <form action="/wikis/create" method="POST">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" name="title" class="form-control" placeholder="Enter title">
+            </div>
+            <div class="form-group">
+              <label for="body">Wiki body</label>
+              <textarea name="body" class="form-control" rows="16" placeholder="Enter wiki body"></textarea>
+              <small class="text-muted">_italic_ |	**bold** | # heading | ![image](http://url/a.png) | `inline code` | ```code block``` | --- horizontal rule</small>
+            </div>
+
         </div>
-        <div class="form-group">
-          <label for="body">Wiki body</label>
-          <textarea name="body" class="form-control" rows="20" placeholder="Enter wiki body"></textarea>
-          <small class="text-muted">_italic_ |	**bold** | # heading | ![image](http://url/a.png) | `inline code` | ```code block``` | --- horizontal rule</small>
-        </div>
+        <% if (currentUser.isPremium() || currentUser.isAdmin()) { %>
+          <aside class="collaborator-container">
+            <h5>Collaborators</h5>
+
+            <ul class="collaborator-ul">
+              <% users.forEach((user) => { %>
+                <li class="collaborator-li">
+                  <input type="checkbox" name="collaborators[]" id="<%= user.id %>" value="<%= user.id %>">
+                  <label for="<%= user.id %>">
+                    <%= user.name %>
+                  </label>
+                </li>
+              <% }) %>
+            </ul>
+          </aside>
+        <% } %>
+
+      </div>
+
         <% if (currentUser.isPremium() || currentUser.isAdmin()) { %>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="true" name="private">
@@ -33,8 +56,8 @@
           </div>
         <% } %>
         <button type="submit" class="btn btn-primary">Publish</button>
+
       </form>
-    <% } %>
 
     </main>
 

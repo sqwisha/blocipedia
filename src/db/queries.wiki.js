@@ -1,20 +1,109 @@
 const Wiki = require('./models').Wiki;
+const User = require('./models').User;
+const Collaborator = require('./models').Collaborator;
+const removeMd = require('remove-markdown', {useImgAltText: false});
 const Authorizer = require('../policies/application');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 module.exports = {
-  getAllWikis(callback) {
-    return Wiki.findAll()
-    .then((wikis) => {
-      callback(null, wikis);
+  showWikis(req, user, callback) {
+    if (!user) { user = {id: -1} }
+    if (user.role == 2) {
+      Wiki.findAll()
+      .then((wikis) => {
+        callback(null, wikis);
+      })
+      .catch((err) => {
+        callback(err);
+      });
+    } else {
+      Collaborator.findAll({
+        attributes:[
+          'wikiId'
+        ],
+        where: {
+          userId: user.id
+        }
+      })
+      .then((collaborators) => {
+        Wiki.findAll({
+          where: {
+            [Op.or]: [
+              {private: false},
+              {userId: user.id},
+              {id: collaborators.map(col => col.wikiId)}
+            ]
+          },
+          include: [{
+            model: Collaborator,
+            as: 'collaborators'
+          }],
+          order: [['title', 'ASC']]
+        })
+        .then((wikis) => {
+          wikis.forEach((wiki) => {
+            let auth = new Authorizer(req.user, wiki);
+            wiki.body = removeMd(wiki.body);
+            wiki.userIsOwner = auth._isOwner();
+            wiki.userIsCollaborator = auth._isCollaborator();
+          });
+          callback(null, wikis);
+        })
+        .catch((err) => {
+          callback(err);
+        });
+      })
+      .catch((err) => {
+        callback(err);
+      });
+    }
+  },
+  getPureWiki(wikiId, callback) {
+    return Wiki.findOne({
+      where: {
+        id: wikiId
+      }
+    })
+    .then((wiki) => {
+      callback(null, wiki);
     })
     .catch((err) => {
+      console.log(err);
       callback(err);
     });
   },
-  getWiki(id, callback) {
-    return Wiki.findOne({where: {id: id}})
+  getWiki(req, callback) {
+    return Wiki.findOne({
+      where: {
+        id: req.params.id
+      },
+      include: [{
+        model: Collaborator,
+        as: 'collaborators',
+        include: [{
+          model: User
+        }]
+      }]
+    })
     .then((wiki) => {
-      callback(null, wiki);
+      User.findAll({
+        where: {
+          id: {
+            [Op.not] : [...wiki.collaborators.map(col =>  col.userId), req.user ? req.user.id : 0]
+          }
+        },
+        order: [['name', 'ASC']]
+      })
+      .then((users) => {
+        let auth = new Authorizer(req.user, wiki);
+        wiki.userIsCollaborator = auth._isCollaborator();
+        wiki.userIsOwner = auth._isOwner();
+        callback(null, wiki, users);
+      })
+      .catch((err) => {
+        callback(err);
+      });
     })
     .catch((err) => {
       callback(err);
@@ -28,14 +117,39 @@ module.exports = {
       userId: req.user.id
     })
     .then((wiki) => {
-      callback(null, wiki);
+      if (req.body.collaborators) {
+        let collaborators = req.body.collaborators.map((user) => {
+          return {
+            userId: parseInt(user),
+            wikiId: wiki.id
+          }
+        });
+
+        Collaborator.bulkCreate(collaborators)
+        .then(() => {
+          callback(null, wiki);
+        })
+        .catch((err) => {
+          callback(err);
+        });
+      } else {
+        callback(null, wiki);
+      }
     })
     .catch((err) => {
       callback(err);
-    })
+    });
   },
   updateWiki(req, updatedWiki, callback) {
-    return Wiki.findOne({where: {id: req.params.id}})
+    return Wiki.findOne({
+      where: {
+        id: req.params.id
+      },
+      include: [{
+        model: Collaborator,
+        as: 'collaborators'
+      }]
+    })
     .then((wiki) => {
       if (!wiki) { return callback('Wiki not found') }
 
@@ -74,6 +188,53 @@ module.exports = {
     })
     .catch((err) => {
       callback(err);
+    });
+  },
+  addCollaborator(wikiId, userId, callback) {
+    Collaborator.findOrCreate({
+      where: {
+        wikiId: wikiId,
+        userId: userId
+      },
+      defaults: {
+        wikiId: wikiId,
+        userId: userId
+      }
+    })
+    .then(() => {
+      callback(null);
+    })
+    .catch((err) => {
+      callback(err);
+    });
+  },
+  deleteCollaborator(req, callback) {
+    Wiki.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+    .then((wiki) => {
+      const authorized = new Authorizer(req.user, wiki).delete();
+
+      if (authorized) {
+        Collaborator.destroy({
+          where: {
+            id: req.params.collaboratorId
+          }
+        })
+        .then(() => {
+          callback(null);
+        })
+        .catch((err) => {
+          callback(err);
+        });
+      } else {
+        callback(401);
+      }
+    })
+    .catch((err) => {
+      callback('Wiki not found');
     });
   }
 };
